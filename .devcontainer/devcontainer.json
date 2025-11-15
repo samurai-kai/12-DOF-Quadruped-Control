@@ -43,8 +43,8 @@
         "--device=/dev/ttyACM0:/dev/ttyACM0" //,
         // "--gpus=all"          // Enable NVIDIA GPU access
     ],
-    "mounts": [
-        "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached"
-    ],
+    // "mounts": [
+    //     "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached"
+    // ],
     "postCreateCommand": "rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R $(whoami) /home/ws/ && sudo apt-get install -y libglu1-mesa libglfw3 && sudo usermod -aG dialout jack && sudo chmod a+rw /dev/i2c-7"
 }

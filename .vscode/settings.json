@@ -5,7 +5,7 @@
     "python.analysis.extraPaths": [
         "/opt/ros/jazzy/lib/python3.12/site-packages"
     ],
-    "cmake.sourceDirectory": "/home/ws/src/quadruped",
+    "cmake.sourceDirectory": "C:/Users/kaidc/Documents/Github/CP-12DOF-Quadruped-Control/src/imu_hardware_interface",
     "files.associations": {
         "array": "cpp",
         "atomic": "cpp",
