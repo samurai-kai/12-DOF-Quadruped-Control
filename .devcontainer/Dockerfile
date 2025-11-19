@@ -88,6 +88,10 @@ RUN make install -j4
 RUN cd /home/acados/acados/external/qpoases \
     && make
 
+# Install Zenoh RMW implementation for ROS 2
+# RUN apt-get update && apt-get install -y \
+#     ros-jazzy-rmw-zenoh-cpp \
+#  && rm -rf /var/lib/apt/lists/*
 
 # Install xhost
 RUN apt-get install -y x11-xserver-utils
