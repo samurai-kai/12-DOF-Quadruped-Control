@@ -50,7 +50,7 @@ def generate_launch_description():
     # Robot description publisher
     urdf_file = os.path.join(
         FindPackageShare('rl12dof_urdf_description').find('rl12dof_urdf_description'),
-        'urdf', 'rl12dof.urdf.xacro'
+        'urdf', 'rl12dof_urdf.xacro'
     )
     robot_description = {'robot_description': Command(['xacro ', urdf_file])}
 
@@ -116,6 +116,7 @@ def generate_launch_description():
             }.items()
         ),
         clock_bridge,
+        robot_state_publisher,
         # Spawn robot first
         spawn_robot,
         # Then bridge its pose and contacts

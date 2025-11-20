@@ -1,10 +1,13 @@
-# sudo chmod a+rw /dev/ttyACM0
-# sudo chmod a+rw /dev/ttyUSB0
-# sudo chmod a+rw /dev/i2c-7
+# Source ROS 2 and workspace
 source /opt/ros/jazzy/setup.bash
-# export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp   # Use Fast DDS (no Zenoh)
 cd /home/ws
-colcon build
+colcon build --symlink-install
 source install/setup.bash
+
+# Set display for GUI apps (RViz, rqt, Gazebo)
 export DISPLAY=host.docker.internal:0.0
 export QT_X11_NO_MITSHM=1
+
+echo "ROS2 workspace is ready for you KAI. Environment configured for GUI and Fast DDS."
+exec "$@"
