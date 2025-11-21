@@ -70,9 +70,17 @@ public:
 
   return_type write(const rclcpp::Time &, const rclcpp::Duration &) override
   {
-    // nothing extra
+    // Simulate motor response by applying commanded positions to the states
+    for (size_t i = 0; i < joint_names_.size(); ++i)
+    {
+      // Move gradually toward the commanded position (simple physics approximation)
+      double error = cmd_pos_[i] - state_pos_[i];
+      state_vel_[i] = error * 10.0;   // proportional velocity
+      state_pos_[i] += state_vel_[i] * 0.001;  // integrate small time step
+    }
     return return_type::OK;
   }
+
 };
 }  // namespace quadruped_hardware_sim
 
