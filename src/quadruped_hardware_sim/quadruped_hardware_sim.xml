@@ -1,0 +1,6 @@
+<library path="quadruped_hardware_sim">
+  <class
+    name="quadruped_hardware_sim/CANMotorSim"
+    type="quadruped_hardware_sim::CANMotorSim"
+    base_class_type="hardware_interface::SystemInterface"/>
+</library>

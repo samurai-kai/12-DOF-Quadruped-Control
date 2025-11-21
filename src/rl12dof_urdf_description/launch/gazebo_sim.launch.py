@@ -5,6 +5,7 @@ from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.parameter_descriptions import ParameterValue
 import os
 import xacro
 import datetime
@@ -52,16 +53,33 @@ def generate_launch_description():
         FindPackageShare('rl12dof_urdf_description').find('rl12dof_urdf_description'),
         'urdf', 'rl12dof_urdf.xacro'
     )
-    robot_description = {'robot_description': Command(['xacro ', urdf_file])}
+    robot_description = ParameterValue(
+        Command(['xacro ', urdf_file]),
+        value_type=str
+    )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='screen',
-        parameters=[robot_description, {'use_sim_time': True}],
+        parameters=[{'robot_description': robot_description, 'use_sim_time': True}],
     )
-
+    
+    ros2_control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+            os.path.join(
+                FindPackageShare('rl12dof_urdf_description').find('rl12dof_urdf_description'),
+                'config', 'controllers.yaml'
+            ),
+            {'use_sim_time': True},
+            {'robot_description': ParameterValue(Command(['xacro ', urdf_file]), value_type=str)},
+        ],
+        output="screen",
+    )
+    
     # Spawn robot node
     spawn_robot = Node(
         package='ros_gz_sim',
@@ -116,6 +134,7 @@ def generate_launch_description():
             }.items()
         ),
         clock_bridge,
+        ros2_control_node,
         robot_state_publisher,
         # Spawn robot first
         spawn_robot,
