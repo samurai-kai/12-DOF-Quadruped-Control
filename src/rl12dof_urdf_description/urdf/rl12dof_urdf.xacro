@@ -325,12 +325,12 @@
   <child link="Foot_V3_Foot_v1_1"/>
 </joint>
 
-<gazebo>
+<!-- <gazebo>
   <plugin filename="libgz-ros2-control-system.so" name="gz_ros2_control">
     <ros2_control>
       <plugin>quadruped_hardware_sim/CANMotorSim</plugin>
     </ros2_control>
   </plugin>
-</gazebo>
+</gazebo> -->
 
 </robot>
