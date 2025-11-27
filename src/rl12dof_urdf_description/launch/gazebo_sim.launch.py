@@ -12,6 +12,7 @@ import datetime
 import shutil  # Add this import
 import uuid  # Add this import
 from launch.substitutions import Command
+from launch.actions import TimerAction
 
 def generate_launch_description():
     # Package and path definitions
@@ -75,7 +76,7 @@ def generate_launch_description():
                 'config', 'controllers.yaml'
             ),
             {'use_sim_time': True},
-            {'robot_description': ParameterValue(Command(['xacro ', urdf_file]), value_type=str)},
+            # {'robot_description': ParameterValue(Command(['xacro ', urdf_file]), value_type=str)},
         ],
         output="screen",
     )
@@ -119,26 +120,38 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        # Include Gazebo launch file
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
-            ),
-            launch_arguments={
-                'paused': 'true',
-                'gui': 'true',
-                'recording': 'false',
-                'debug': 'false',
-                'verbose': 'true',
-                'gz_args': '-r empty.sdf',
-            }.items()
+    # Gazebo first
+    IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
         ),
-        clock_bridge,
-        ros2_control_node,
-        robot_state_publisher,
-        # Spawn robot first
-        spawn_robot,
-        # Then bridge its pose and contacts
-        state_bridge,
-        bag_recorder,
+        launch_arguments={
+            'paused': 'true',
+            'gui': 'true',
+            'recording': 'false',
+            'debug': 'false',
+            'verbose': 'true',
+            'gz_args': '-r empty.sdf',
+        }.items()
+    ),
+
+    clock_bridge,
+
+    # 1) Publish robot_description
+    robot_state_publisher,
+
+    # 2) ros2_control MUST start AFTER robot_description exists
+    TimerAction(
+        period=2.0,
+        actions=[ros2_control_node],
+    ),
+
+    # 3) Spawn robot AFTER ros2_control is ready
+    TimerAction(
+        period=3.0,
+        actions=[spawn_robot],
+    ),
+
+    state_bridge,
+    bag_recorder,
     ])

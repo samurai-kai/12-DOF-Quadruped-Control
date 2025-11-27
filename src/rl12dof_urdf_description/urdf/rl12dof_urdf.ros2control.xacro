@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="rl12_control" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- This macro inserts the ros2_control block INSIDE the robot -->
+  <xacro:macro name="rl12dof_ros2_control" params="">
+
+    <ros2_control name="rl12dof_system" type="system">
+
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <joint name="link1_to_base">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="link2_to_link1">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="link3_to_link2">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>

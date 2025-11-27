@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rl12dof_gazebo" params="">
+
+    <gazebo>
+      <plugin
+        name="gz_ros2_control::GazeboSimROS2ControlPlugin"
+        filename="libgz_ros2_control-system.so">
+
+        <!-- Controller config -->
+        <parameters>$(find rl12dof_urdf_description)/config/controllers.yaml</parameters>
+
+        <!-- Required for ros2_control -->
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+
+      </plugin>
+
+      <!-- Optional pose publisher -->
+      <plugin
+        filename="gz-sim-pose-publisher-system"
+        name="gz::sim::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+      </plugin>
+
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
