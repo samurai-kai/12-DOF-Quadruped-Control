@@ -16,13 +16,6 @@
   <!-- Insert links + joints -->
   <xacro:rl12dof_links_joints />
 
-  <!-- Fixed joint to world, for SIM ONLY -->
-  <!-- <joint name="base_to_world" type="fixed">
-      <parent link="world"/>
-      <child link="base_link"/>
-      <origin xyz="0 0 0.5" rpy="0 0 0"/>
-  </joint> -->
-
   <!-- Insert ros2_control block -->
   <xacro:rl12dof_ros2_control />
 

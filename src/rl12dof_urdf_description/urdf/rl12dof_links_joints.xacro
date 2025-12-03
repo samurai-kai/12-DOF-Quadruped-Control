@@ -2,6 +2,29 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:macro name="rl12dof_links_joints" params="">
 
+    <link name="test_stand">
+      <inertial>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <mass value="200.0"/>     
+        <inertia ixx="40.0" iyy="40.0" izz="40.0" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+
+      <visual>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.01 0.01 0.5"/> <!-- 1cm x 1cm x 50cm stand -->
+        </geometry>
+        <material name="blue"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.01 0.01 0.5"/>
+        </geometry>
+      </collision>
+    </link>
+
     <link name="base_link">
       <inertial>
         <origin xyz="-4.647671670063145e-15 1.3063770683227124e-17 -0.009443778341178793" rpy="0 0 0"/>
@@ -255,7 +278,14 @@
     </link>
 
     <!-- Joints (3 actuated + fixed ones) -->
-    
+
+    <!-- Have to remove this for hardware -->
+    <joint name="stand_to_base" type="fixed">
+      <origin xyz="0 0 0.55" rpy="0 -1.5708 0"/>
+      <parent link="test_stand"/>
+      <child link="base_link"/>
+    </joint>
+
     <joint name="link1_to_base" type="continuous">
       <origin xyz="0.0 0.0 0.007807" rpy="0 0 0"/>
       <parent link="base_link"/>
@@ -304,7 +334,7 @@
       <origin xyz="0.0 -0.016573 0.14605" rpy="0 0 0"/>
       <parent link="Right_Femur_Housing_v1_1"/>
       <child link="Tibia_Link_v97_1"/>
-      <axis xyz="0.0 1.0 0.0"/>
+      <axis xyz="0.0 -1.0 0.0"/>
     </joint>
 
     <joint name="drive_to_M3" type="fixed">
@@ -324,33 +354,6 @@
       <parent link="Tibia_Link_v97_1"/>
       <child link="Foot_V3_Foot_v1_1"/>
     </joint>
-
-    <!-- <gazebo reference="link1_to_base">
-      <joint>
-        <type>revolute</type>
-        <axis>
-          <xyz>0 0 1</xyz>
-        </axis>
-      </joint>
-    </gazebo>
-
-    <gazebo reference="link2_to_link1">
-      <joint>
-        <type>revolute</type>
-        <axis>
-          <xyz>0 -1 0</xyz>
-        </axis>
-      </joint>
-    </gazebo>
-
-    <gazebo reference="link3_to_link2">
-      <joint>
-        <type>revolute</type>
-        <axis>
-          <xyz>0 1 0</xyz>
-        </axis>
-      </joint>
-    </gazebo> -->
 
   </xacro:macro>
 
