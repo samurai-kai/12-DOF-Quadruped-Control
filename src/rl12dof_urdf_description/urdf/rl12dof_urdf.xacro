@@ -7,7 +7,7 @@
   <!-- Geometry + kinematics -->
   <xacro:include filename="$(find rl12dof_urdf_description)/urdf/rl12dof_links_joints.xacro" />
 
-  <!-- ros2_control macro (THIS WAS MISSING OR WRONG) -->
+  <!-- ros2_control macro -->
   <xacro:include filename="$(find rl12dof_urdf_description)/urdf/rl12dof_urdf.ros2control.xacro" />
 
   <!-- Gazebo plugin macro -->
@@ -15,6 +15,13 @@
 
   <!-- Insert links + joints -->
   <xacro:rl12dof_links_joints />
+
+  <!-- Fixed joint to world, for SIM ONLY -->
+  <!-- <joint name="base_to_world" type="fixed">
+      <parent link="world"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+  </joint> -->
 
   <!-- Insert ros2_control block -->
   <xacro:rl12dof_ros2_control />

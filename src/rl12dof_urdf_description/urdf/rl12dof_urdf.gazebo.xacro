@@ -3,6 +3,7 @@
 
   <xacro:macro name="rl12dof_gazebo" params="">
 
+    <!-- Existing Gazebo plugin block -->
     <gazebo>
       <plugin
         name="gz_ros2_control::GazeboSimROS2ControlPlugin"
@@ -14,7 +15,6 @@
         <!-- Required for ros2_control -->
         <robot_param>robot_description</robot_param>
         <robot_param_node>robot_state_publisher</robot_param_node>
-
       </plugin>
 
       <!-- Optional pose publisher -->
@@ -23,7 +23,33 @@
         name="gz::sim::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
       </plugin>
+    </gazebo>
 
+    <gazebo reference="link1_to_base">
+      <joint>
+        <type>revolute</type>
+        <axis>
+          <xyz>0 0 1</xyz>
+        </axis>
+      </joint>
+    </gazebo>
+
+    <gazebo reference="link2_to_link1">
+      <joint>
+        <type>revolute</type>
+        <axis>
+          <xyz>0 -1 0</xyz>
+        </axis>
+      </joint>
+    </gazebo>
+
+    <gazebo reference="link3_to_link2">
+      <joint>
+        <type>revolute</type>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
     </gazebo>
 
   </xacro:macro>

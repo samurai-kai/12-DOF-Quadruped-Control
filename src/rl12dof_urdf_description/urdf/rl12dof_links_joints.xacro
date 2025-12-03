@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-
   <xacro:macro name="rl12dof_links_joints" params="">
 
     <link name="base_link">
@@ -256,7 +255,7 @@
     </link>
 
     <!-- Joints (3 actuated + fixed ones) -->
-
+    
     <joint name="link1_to_base" type="continuous">
       <origin xyz="0.0 0.0 0.007807" rpy="0 0 0"/>
       <parent link="base_link"/>
@@ -326,7 +325,7 @@
       <child link="Foot_V3_Foot_v1_1"/>
     </joint>
 
-     <gazebo reference="link1_to_base">
+    <!-- <gazebo reference="link1_to_base">
       <joint>
         <type>revolute</type>
         <axis>
@@ -351,7 +350,7 @@
           <xyz>0 1 0</xyz>
         </axis>
       </joint>
-    </gazebo>
+    </gazebo> -->
 
   </xacro:macro>
 
