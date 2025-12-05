@@ -1,3 +1,4 @@
+source /opt/ros/jazzy/setup.bash
 colcon build --packages-select rl12dof_urdf_description
 source install/setup.bash
 
