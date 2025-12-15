@@ -13,7 +13,7 @@
       </inertial>
 
       <visual>
-        <origin xyz="0 0 0.25"/>
+        <origin xyz="0 0 0"/>
         <geometry>
           <box size="0.01 0.01 0.5"/>
         </geometry>
@@ -21,11 +21,15 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0.25"/>
+        <origin xyz="0 0 0"/>
         <geometry>
           <box size="0.01 0.01 0.5"/>
         </geometry>
       </collision>
+      
+      <gazebo>
+        <static>true</static>
+      </gazebo>
     </link>
 
     <link name="hip_mount">
@@ -300,18 +304,11 @@
 
     <!-- Joints (3 actuated + fixed ones) -->
 
-    <!-- Have to remove this for hardware -->
-    <!-- <joint name="stand_to_base" type="fixed">
-      <origin xyz="0 0 0.55" rpy="0 -1.5708 0"/>
-      <parent link="test_stand"/>
-      <child link="base_link"/>
-    </joint> -->
-    
     <!-- To convert stand to a slider -->
     <joint name="test_stand_slider" type="prismatic">
       <parent link="test_stand"/>
       <child link="hip_mount"/>
-      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <origin xyz="0 0 0.25" rpy="0 0 0"/>
       <axis xyz="0 0 -1"/>
       <limit lower="0" upper="0.50" effort="5000" velocity="0.1"/>
       <dynamics damping="1.0" friction="0.2"/>
