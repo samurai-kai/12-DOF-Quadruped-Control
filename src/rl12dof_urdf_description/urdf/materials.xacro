@@ -5,4 +5,12 @@
   <color rgba="0.700 0.700 0.700 1.000"/>
 </material>
 
+<material name="blue">
+  <color rgba="0 0 1 1"/>
+</material>
+
+<material name="red">
+  <color rgba="1 0 0 1"/>
+</material>
+
 </robot>
