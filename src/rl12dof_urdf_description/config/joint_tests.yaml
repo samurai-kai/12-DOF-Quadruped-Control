@@ -3,18 +3,12 @@ joint_test_param_node:
     num_joints: 3
     delay_seconds: 1.0
     joint_sequence_flat:
-      - 0.0
-      - 0.0
-      - 0.0
       - 0.5
       - 0.3
-      - -0.4
+      - 0.4
       - 1.0
-      - -0.5
+      - 0.5
       - 0.2
-      - -0.3
+      - 0.3
       - 0.8
       - 1.0
-      - 0.0
-      - 0.0
-      - 0.0

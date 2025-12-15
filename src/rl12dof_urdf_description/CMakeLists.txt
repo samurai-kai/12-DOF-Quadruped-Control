@@ -8,6 +8,7 @@ find_package(ament_cmake REQUIRED)
 #############################
 install(PROGRAMS
   scripts/joint_test_param_node.py
+  scripts/safety.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

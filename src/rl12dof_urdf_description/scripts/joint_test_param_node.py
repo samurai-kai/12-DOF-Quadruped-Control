@@ -2,6 +2,8 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
+from safety import validate_command
+
 
 
 class JointTestParamNode(Node):
@@ -58,13 +60,26 @@ class JointTestParamNode(Node):
         self.timer = self.create_timer(self.delay, self.run_step)
 
     def run_step(self):
+        cmd = self.sequence[self.step]
+
+        # Validate command (joint limits + singularity avoidance)
+        valid, reason = validate_command(cmd)
+        if not valid:
+            self.get_logger().error(f"Command rejected: {reason}")
+            return
+
+        # Prepare message
         msg = Float64MultiArray()
-        msg.data = self.sequence[self.step]
+        msg.data = cmd
+
+        # Log once
         self.get_logger().info(f"Sending command: {msg.data}")
+
+        # Publish once
         self.pub.publish(msg)
 
+        # Move to next command in sequence
         self.step = (self.step + 1) % len(self.sequence)
-
 
 def main(args=None):
     rclpy.init(args=args)
