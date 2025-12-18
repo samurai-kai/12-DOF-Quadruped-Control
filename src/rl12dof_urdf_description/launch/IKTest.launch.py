@@ -1,22 +1,25 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.substitutions import PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
+from ament_index_python.packages import get_package_share_directory
+
 
 def generate_launch_description():
 
+    pkg_share = get_package_share_directory('rl12dof_urdf_description')
+
     config = PathJoinSubstitution([
-        FindPackageShare('rl12dof_urdf_description'),
+        pkg_share,
         'config',
-        'joint_tests.yaml'
+        'IK_cmds.yaml'
     ])
 
     return LaunchDescription([
         Node(
             package='rl12dof_urdf_description',
-            executable='joint_test_param_node.py',
-            name='joint_test_param_node',
-            parameters=[config],
-            output='screen'
+            executable='IKTestNode.py',
+            name='IKTestNode',
+            output='screen',
+            parameters=[config]
         )
     ])

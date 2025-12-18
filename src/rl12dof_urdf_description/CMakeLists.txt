@@ -7,7 +7,8 @@ find_package(ament_cmake REQUIRED)
 # Install Python Executables
 #############################
 install(PROGRAMS
-  scripts/joint_test_param_node.py
+  scripts/FKTestNode.py
+  scripts/IKTestNode.py 
   scripts/safety.py
   scripts/jacobian_numeric.py
   DESTINATION lib/${PROJECT_NAME}

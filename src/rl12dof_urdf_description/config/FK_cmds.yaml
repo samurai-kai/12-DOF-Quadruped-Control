@@ -1,10 +1,13 @@
-joint_test_param_node:
+FKTestNode:
   ros__parameters:
     input_in_degrees: true
     step_loop: false
     num_joints: 3
     delay_seconds: 4.0
     joint_sequence_flat:
+      - -15.0
+      - 45.0
+      - 60.0
       - 0.0
       - 45.0
       - 90.0

@@ -6,9 +6,9 @@ from safety import validate_command
 import math
 
 
-class JointTestParamNode(Node):
+class FKTestNode(Node):
     def __init__(self):
-        super().__init__('joint_test_param_node')
+        super().__init__('FKTestNode')
 
         # Declare parameters with defaults
         self.declare_parameter('num_joints', 3)
@@ -99,7 +99,7 @@ class JointTestParamNode(Node):
 # --------------------------------------------------------------
 def main(args=None):
     rclpy.init(args=args)
-    node = JointTestParamNode()
+    node = FKTestNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
