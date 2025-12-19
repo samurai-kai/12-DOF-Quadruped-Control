@@ -5,7 +5,7 @@ source install/setup.bash
 # Check controllers
 ros2 control list_controllers
 
-ros2 launch rl12dof_urdf_description IKTest.launch.py
+ros2 launch rl12dof_urdf_description FKTest.launch.py
 
 
 # ros2 topic pub /joint_group_position_controller/commands std_msgs/msg/Float64MultiArray "{data: [0.5, -0.5, 0.2]}"

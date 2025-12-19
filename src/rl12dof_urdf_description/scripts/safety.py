@@ -33,7 +33,7 @@ def within_limits(q):
     )
 
 def geometric_singularity(q):
-    """Thigh + knee ≈ 0 → straight leg → geometric singularity."""
+    """Thigh + knee ≈ 0, straight leg, geometric singularity."""
     _, t, k = q
     return abs(t + k) < GEOM_THRESHOLD
 
