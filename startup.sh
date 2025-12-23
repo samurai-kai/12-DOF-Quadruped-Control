@@ -2,7 +2,7 @@
 source /opt/ros/jazzy/setup.bash
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp   # Use Fast DDS (no Zenoh)
 cd /home/ws
-colcon build --symlink-install
+colcon build --packages-select rl12dof_urdf_description
 source install/setup.bash
 
 # Set display for GUI apps (RViz, rqt, Gazebo)

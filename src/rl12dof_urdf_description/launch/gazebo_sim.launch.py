@@ -120,65 +120,64 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        # Start Gazebo FIRST
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
+    # Start Gazebo FIRST
+    IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')
+        ),
+        launch_arguments={
+            'paused': 'true',
+            'gui': 'true',
+            'recording': 'false',
+            'debug': 'false',
+            'verbose': 'true',
+            'gz_args': '-r empty.sdf',
+        }.items()
+    ),
+
+    clock_bridge,
+
+    # Publish robot_description
+    robot_state_publisher,
+
+    # Start ros2_control_node AFTER robot_description exists
+    TimerAction(
+        period=1.0,
+        actions=[ros2_control_node],
+    ),
+
+    # Spawn robot in Gazebo FIRST
+    TimerAction(
+        period=2.0,
+        actions=[spawn_robot],
+    ),
+
+    # NOW spawn controllers (after robot exists)
+    TimerAction(
+        period=3.0,
+        actions=[
+            Node(
+                package="controller_manager",
+                executable="spawner",
+                arguments=["joint_state_broadcaster"],
+                output="screen"
             ),
-            launch_arguments={
-                'paused': 'true',
-                'gui': 'true',
-                'recording': 'false',
-                'debug': 'false',
-                'verbose': 'true',
-                'gz_args': '-r empty.sdf',
-            }.items()
-        ),
+        ],
+    ),
 
-        clock_bridge,
+    TimerAction(
+        period=4.0,
+        actions=[
+            Node(
+                package="controller_manager",
+                executable="spawner",
+                arguments=["joint_group_position_controller"],
+                output="screen"
+            ),
+        ],
+    ),
 
-        # Publish robot_description
-        robot_state_publisher,
-
-        # Start ros2_control_node AFTER robot_description exists
-        TimerAction(
-            period=1.0,
-            actions=[ros2_control_node],
-        ),
-
-        # Spawn controllers (must run AFTER ros2_control_node)
-        TimerAction(
-            period=2.0,
-            actions=[
-                Node(
-                    package="controller_manager",
-                    executable="spawner",
-                    arguments=["joint_state_broadcaster"],
-                    output="screen"
-                ),
-            ],
-        ),
-
-        TimerAction(
-            period=3.0,
-            actions=[
-                Node(
-                    package="controller_manager",
-                    executable="spawner",
-                    # arguments=["joint_group_effort_controller"], # for effort control
-                    arguments=["joint_group_position_controller"], # for position control
-                    output="screen"
-                ),
-            ],
-        ),
-
-        # NOW spawn robot in Gazebo
-        TimerAction(
-            period=4.0,
-            actions=[spawn_robot],
-        ),
-
-        # Optional bridge + bag
-        state_bridge,
-        bag_recorder,
-    ])
+    # Optional bridge + bag
+    state_bridge,
+    bag_recorder,
+])

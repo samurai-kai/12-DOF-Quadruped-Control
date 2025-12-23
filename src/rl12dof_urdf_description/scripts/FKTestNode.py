@@ -63,6 +63,7 @@ class FKTestNode(Node):
 
         self.step = 0
         self.timer = self.create_timer(self.delay, self.run_step)
+        self.done = False
 
     # ----------------------------------------------------------
 
@@ -84,25 +85,30 @@ class FKTestNode(Node):
         # Advance to next step
         self.step += 1
 
-        # If looping is enabled → wrap around
+        # If looping is enabled, wrap around
         if self.step_loop:
             self.step %= len(self.sequence)
             return
 
-        # If looping is OFF → stop after last command
+        # If looping is OFF, stop after last command
         if self.step >= len(self.sequence):
-            self.get_logger().info("Finished all commands — stopping timer.")
+            self.get_logger().info(
+                "Finished all commands — shutting down FKTestNode."
+            )
             self.timer.cancel()
+            self.done = True
             return
-
 
 # --------------------------------------------------------------
 def main(args=None):
     rclpy.init(args=args)
     node = FKTestNode()
-    rclpy.spin(node)
+    while rclpy.ok() and not node.done:
+        rclpy.spin_once(node, timeout_sec=0.1)
+
     node.destroy_node()
     rclpy.shutdown()
+
 
 
 if __name__ == '__main__':
