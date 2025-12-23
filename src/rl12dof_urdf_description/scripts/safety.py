@@ -53,8 +53,8 @@ def jacobian_singularity(q):
 def validate_command(q):
     """Main safety entry point. q is a 3-element radian joint vector."""
     
-    # if not within_limits(q):
-    #     return False, "Joint limit violation"
+    if not within_limits(q):
+        return False, "Joint limit violation"
     
     if geometric_singularity(q):
         return False, "Leg too straight (geometric singularity)"

@@ -1,0 +1,41 @@
+ImpedanceTestNode:
+  ros__parameters:
+
+    # -----------------------------
+    # General
+    # -----------------------------
+    num_joints: 3
+    publish_rate_hz: 500.0
+    input_in_degrees: true
+
+    # -----------------------------
+    # Desired equilibrium (FK pose)
+    # -----------------------------
+    q_des:
+      - 0.0     # hip
+      - 45.0    # thigh
+      - 100.0   # knee
+
+    # -----------------------------
+    # Joint-space impedance gains
+    # τ = Kp (q_des - q) - Kd qd
+    # -----------------------------
+    Kp:
+      - 60.0
+      - 80.0
+      - 50.0
+
+    Kd:
+      - 3.0
+      - 4.0
+      - 2.5
+
+    # -----------------------------
+    # Safety
+    # -----------------------------
+    torque_limits:
+      - 25.0
+      - 30.0
+      - 20.0
+
+    knee_min_deg: 6.0

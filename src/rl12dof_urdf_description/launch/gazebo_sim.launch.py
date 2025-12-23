@@ -165,7 +165,8 @@ def generate_launch_description():
                 Node(
                     package="controller_manager",
                     executable="spawner",
-                    arguments=["joint_group_position_controller"],
+                    # arguments=["joint_group_effort_controller"], # for effort control
+                    arguments=["joint_group_position_controller"], # for position control
                     output="screen"
                 ),
             ],

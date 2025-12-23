@@ -4,9 +4,10 @@ IKTestNode:
     # Foot trajectory (frame: +X backward, +Y outward, +Z down)
     freq: 0.5            # Hz
     amp_z: 0.03          # vertical swing (m)
-    x_fixed: 0.0        # backward offset (m)
-    y_fixed: 0.1        # outward offset (m) for right leg
-    z_nominal: -0.2     # nominal down distance (m)
+
+    x_fixed: 0.05        # (+dir) backward offset (m)
+    y_fixed: 0.1        # (+dir) outward offset (m) for right leg
+    z_nominal: -0.15     # (+dir) nominal up distance (m)
 
     dt: 1.0             # update rate (s)
     verbose: true

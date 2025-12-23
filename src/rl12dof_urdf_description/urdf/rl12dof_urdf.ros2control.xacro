@@ -13,6 +13,7 @@
       <!-- Joint 1 -->
       <joint name="link1_to_base">
         <command_interface name="position"/>
+        <command_interface name="effort"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
@@ -21,6 +22,7 @@
       <!-- Joint 2 -->
       <joint name="link2_to_link1">
         <command_interface name="position"/>
+        <command_interface name="effort"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>
@@ -29,6 +31,7 @@
       <!-- Joint 3 -->
       <joint name="link3_to_link2">
         <command_interface name="position"/>
+        <command_interface name="effort"/>
         <state_interface name="position"/>
         <state_interface name="velocity"/>
         <state_interface name="effort"/>

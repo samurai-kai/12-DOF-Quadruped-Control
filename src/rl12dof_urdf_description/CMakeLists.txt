@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 install(PROGRAMS
   scripts/FKTestNode.py
   scripts/IKTestNode.py 
+  scripts/ImpedanceTestNode.py
   scripts/safety.py
   scripts/jacobian_numeric.py
   DESTINATION lib/${PROJECT_NAME}
