@@ -5,13 +5,13 @@ FKTestNode:
     num_joints: 3
     delay_seconds: 4.0
     joint_sequence_flat:
-      - -15.0
-      - 45.0
+      - 10.0
+      - 30.0
       - 60.0
-      - 0.0
+      - 10.0
       - 45.0
       - 90.0
-      - 0.0
+      - 10.0
       - 45.0
       - 120.0
       - 0.0

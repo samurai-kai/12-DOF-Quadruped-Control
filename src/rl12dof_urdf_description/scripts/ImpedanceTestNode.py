@@ -4,12 +4,15 @@ from rclpy.node import Node
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64MultiArray
 import math
+from rcl_interfaces.msg import SetParametersResult
 
 
 class ImpedanceTestNode(Node):
 
     def __init__(self):
         super().__init__('ImpedanceTestNode')
+        
+        self.add_on_set_parameters_callback(self.on_param_change)
 
         # -----------------------------
         # Parameters
@@ -21,7 +24,7 @@ class ImpedanceTestNode(Node):
         self.declare_parameter('q_des', [0.0, 0.0, 0.0])
         self.declare_parameter('Kp', [0.0, 0.0, 0.0])
         self.declare_parameter('Kd', [0.0, 0.0, 0.0])
-        self.declare_parameter('torque_limits', [0.0, 0.0, 0.0])
+        self.declare_parameter('torque_limits', [0.0, 0.0, 0.0]) # N-m
 
         self.declare_parameter('knee_min_deg', 6.0)
 
@@ -86,11 +89,11 @@ class ImpedanceTestNode(Node):
             return
 
         # Singularity guard
-        if self.q[2] < self.knee_min:
-            self.get_logger().warn_throttle(
-                1.0,
-                f"Knee near singularity: {self.q[2]:.3f} rad"
-            )
+        # if self.q[2] < self.knee_min:
+        #     self.get_logger().warn_throttle(
+        #         1.0,
+        #         f"Knee near singularity: {self.q[2]:.3f} rad"
+        #     )
 
         tau = []
 
@@ -111,6 +114,20 @@ class ImpedanceTestNode(Node):
         msg.data = tau
         self.pub.publish(msg)
 
+    from rcl_interfaces.msg import SetParametersResult
+
+    # -----------------------------
+    def on_param_change(self, params):
+        for p in params:
+            if p.name == 'Kp':
+                self.Kp = list(p.value)
+            elif p.name == 'Kd':
+                self.Kd = list(p.value)
+            elif p.name == 'torque_limits':
+                self.torque_limits = list(p.value)
+            elif p.name == 'q_des':
+                self.q_des = list(p.value)
+        return SetParametersResult(successful=True)
 
 def main(args=None):
     rclpy.init(args=args)
